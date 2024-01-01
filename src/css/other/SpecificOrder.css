@@ -1,0 +1,155 @@
+.s-order {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+  margin: auto;
+  padding: 2rem 0.5rem;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+
+/* HEADING */
+
+.s-order__heading {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+/* ALL INFO */
+
+.s-order__info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.s-order__info-con {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+/* INFO LEFT */
+
+.s-order__info-left {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* USER DETAILS */
+
+.s-order__email {
+  white-space: nowrap;
+}
+
+/* STATUS */
+
+.s-order__status {
+  text-transform: capitalize;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  position: relative;
+}
+
+.s-order__status--delivered {
+  color: #50c878;
+}
+.s-order__status--shipped {
+  color: rgb(219, 186, 101);
+}
+.s-order__status--pending {
+  color: red;
+}
+
+/* EDIT BTN */
+
+.s-order__status-edit-btn {
+  cursor: pointer;
+  display: grid;
+}
+
+/* ORDERED ITEMS */
+
+.s-order__items-con {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 2vw, 2rem);
+}
+
+.s-order__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.s-order__item-img {
+  width: 150px;
+  height: 120px;
+  object-fit: cover;
+}
+
+.s-order__item-info {
+  display: flex;
+  gap: 1rem;
+}
+
+.s-order__item-name {
+  font-weight: 500;
+}
+
+/* STATUS EDIT OPTIONS */
+
+/* Order Status options */
+
+.s-order__status-options-con {
+  position: absolute;
+  background: black;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  top: 2rem;
+  text-align: center;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+}
+/* Arrow */
+.s-order__status-options-con::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.6rem;
+  border: 5px solid;
+  border-color: transparent transparent black transparent;
+}
+
+/* Orders status option */
+.s-order__status-option {
+  padding: 0.2rem 0.5rem;
+}
+.s-order__status-option:hover {
+  background: whitesmoke;
+  color: black;
+}
+
+@media screen and (min-width: 1400px) {
+  .s-order {
+    padding: 2rem 0;
+  }
+  .s-order__info {
+    flex-direction: row;
+    gap: clamp(5rem, 5vw, 8rem);
+  }
+  .s-order__items-con {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1rem, 3vw, 2rem);
+    grid-auto-flow: row;
+  }
+  .s-order__item {
+    white-space: nowrap;
+  }
+}

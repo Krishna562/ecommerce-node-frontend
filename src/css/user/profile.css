@@ -1,0 +1,83 @@
+.profile {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 60px;
+  margin-bottom: 15rem;
+}
+
+.profile__header {
+  font-size: 2.5rem;
+}
+
+.profile__con {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  width: 80%;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile__info-con {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+  font-size: 1.2rem;
+}
+
+.profile__email {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.profile__options-con {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-self: center;
+}
+
+.profile__btn {
+  font-size: 1.1rem;
+  border-radius: 5px;
+}
+
+.profile__btn--logout {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: firebrick !important;
+}
+
+.profile__view-admin-dashboard-btn {
+  font-size: 1.3rem;
+}
+
+@media screen and (max-width: 678px) {
+  .profile__con {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .profile__info-con {
+    margin: auto;
+  }
+  .profile__options-con {
+    flex-direction: row;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .profile__con {
+    width: 100%;
+    padding: 2rem 1rem;
+  }
+  .profile {
+    padding: 2rem 1rem;
+  }
+}

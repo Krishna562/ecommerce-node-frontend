@@ -1,0 +1,148 @@
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem 0;
+  width: 75%;
+  margin: 0 auto;
+}
+
+/* HEADING */
+
+.products__heading {
+  font-size: var(--HEADING-FONT-SIZE);
+  text-align: center;
+}
+
+/* NO PRODUCTS */
+
+.products__no-products {
+  font-size: var(--TEXT-FONT-SIZE);
+  text-align: center;
+}
+
+/* PRODUCTS GRID */
+
+.products__grid {
+  display: grid;
+  grid-auto-rows: 395px;
+  grid-auto-columns: 290px;
+  gap: 1rem;
+  margin: auto;
+}
+
+/* PRODUCT */
+
+.product {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-shadow: var(--BOX-SHADOW);
+  border-radius: 10px;
+}
+
+.product__img-con {
+  width: 100%;
+  height: 65%;
+  position: relative;
+  border-bottom: var(--LIGHT-BORDER);
+}
+
+.product__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.product__stars {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 0.1rem 0.5rem;
+  border-radius: 5px;
+}
+
+/* Info */
+
+.product__info-con {
+  height: 35%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+.product__name {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.product__info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product__total-reviews {
+  color: rgba(71, 71, 71, 0.733);
+}
+
+.product__price {
+  font-size: 1.2rem;
+}
+
+/* Bottom */
+
+.product__bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product__actions-con {
+  display: flex;
+  gap: 1rem;
+}
+
+.product__action {
+  cursor: pointer;
+}
+
+.product__action--delete {
+  color: rgb(202, 30, 30);
+}
+
+.product__category {
+  text-transform: capitalize;
+  color: rgba(71, 71, 71, 0.733);
+}
+
+/* DETAILS BTN */
+
+.product__btn {
+  padding: 0.2rem 0.5rem !important;
+}
+
+/* RESPONSIVE */
+
+@media screen and (min-width: 768px) {
+  .products__grid {
+    grid-template-columns: repeat(2, 290px);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .products__grid {
+    grid-template-columns: repeat(3, 290px);
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .products__grid {
+    grid-template-columns: repeat(4, 290px);
+  }
+}

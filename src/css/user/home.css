@@ -1,0 +1,230 @@
+.banner {
+  background: whitesmoke;
+  margin-bottom: 5rem;
+  margin-top: 60px;
+}
+
+.banner__con {
+  position: relative;
+  display: flex;
+  width: 75%;
+  margin: auto;
+  justify-content: space-between;
+  padding: 4rem 0;
+}
+
+/* BANNER GRAPHIC */
+
+.banner__bags {
+  width: 45%;
+  align-self: center;
+}
+
+/* BANNER TEXT */
+
+.banner__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 40%;
+  align-self: center;
+}
+
+.banner__heading {
+  font-size: 4rem;
+}
+
+.banner__p {
+  font-size: 1.5rem;
+}
+
+.banner__button {
+  background: none;
+  align-self: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+.banner__button:hover {
+  background: black;
+  color: whitesmoke;
+}
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 1500px) {
+  .banner__bags {
+    width: 55%;
+  }
+  .banner__heading {
+    font-size: 3.5rem;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .banner__p {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .banner__heading {
+    font-size: 3rem;
+  }
+  .banner__p {
+    font-size: 1rem;
+  }
+  .banner__button {
+    font-size: 0.8rem;
+  }
+  .banner__con {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .banner__bags {
+    width: 75%;
+  }
+  .banner__text {
+    width: 70%;
+  }
+  .banner__heading {
+    font-size: 2.5rem;
+  }
+  .banner__con {
+    width: 90%;
+    flex-direction: column;
+    padding-top: 2rem;
+  }
+  .banner {
+    margin-bottom: 3rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .banner__bags {
+    width: 75%;
+  }
+  .banner__text {
+    width: 70%;
+  }
+  .banner__heading {
+    font-size: 2.5rem;
+  }
+  .banner__con {
+    padding-top: 3rem;
+    gap: 2rem;
+  }
+}
+
+/* FEATURED PRODUCTS SECTION */
+
+.featured {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+.featured__heading {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+}
+
+/* Grid */
+
+.featured__products-con {
+  display: grid;
+  grid-auto-rows: 395px;
+  grid-auto-columns: 290px;
+  gap: 1rem;
+  margin: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .featured__products-con {
+    grid-template-columns: repeat(2, 290px);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .featured__products-con {
+    grid-template-columns: repeat(3, 290px);
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .featured__products-con {
+    grid-template-columns: repeat(4, 290px);
+  }
+}
+
+/* ACCORDIAN */
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: whitesmoke;
+  margin-bottom: 5rem;
+}
+
+.accordion__heading {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-top: 2rem;
+}
+
+/* Container */
+
+.accordion__con {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  margin-bottom: 3rem;
+  max-width: 800px;
+}
+
+/* Question */
+
+.ques {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background: black;
+  padding: 0rem 0 1rem 0;
+}
+
+.ques__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  cursor: pointer;
+  padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.ques__toggle {
+  padding: 0 !important;
+  display: grid;
+}
+
+.ques__answer {
+  overflow: hidden;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  max-height: 0;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  padding: 0 1.5rem;
+}
+
+/* Active class */
+
+.ques__answer.active {
+  max-height: 200px;
+  transition: max-height 0.5s;
+}

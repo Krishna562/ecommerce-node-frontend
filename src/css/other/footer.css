@@ -1,0 +1,151 @@
+.footer {
+  background: black;
+  color: whitesmoke;
+  padding: 2rem 2rem 1.5rem 2rem;
+}
+
+.footer__con {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer__top {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* LOGO */
+
+.footer__logo-con {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer__logo {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 70%;
+}
+
+.footer__para {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+}
+
+/* Graphic */
+
+.footer__graphic {
+  width: 150px;
+}
+
+/* UP BTN */
+
+.footer__up-btn {
+  cursor: pointer;
+  border: whitesmoke 2px solid;
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-content: center;
+}
+
+/* Up btn large screen */
+
+.footer__up-btn--lg {
+  display: none;
+}
+
+/* SHOP LINKS CON */
+
+.footer__shop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__shop-head {
+  font-size: 1.5rem;
+}
+
+.footer__categories-con {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  align-items: flex-start;
+}
+
+.footer__category {
+  cursor: pointer;
+  color: whitesmoke;
+  text-decoration: none;
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+}
+.footer__category:hover {
+  text-decoration: underline;
+}
+
+/* SOCIAL */
+
+.footer__social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__social-head {
+  font-size: 1.5rem;
+}
+
+.footer__social-links-con {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer__social-link {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.footer__social-link:hover {
+  opacity: 0.8;
+}
+
+/* COPYRIGHT */
+
+.footer__copyright {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .footer__logo {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .footer__copyright {
+    text-align: left;
+  }
+  .footer__up-btn--sm {
+    display: none;
+  }
+  .footer__up-btn--lg {
+    display: grid;
+  }
+  .footer__top {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .footer__logo-con {
+    width: 30%;
+  }
+  .footer__logo {
+    width: 100%;
+  }
+}

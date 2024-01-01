@@ -6,3 +6,14 @@
   box-sizing: border-box;
   font-family: "Afacad", sans-serif;
 }
+
+.btn {
+  background: black;
+  color: whitesmoke;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+.btn:hover {
+  opacity: 0.8;
+}

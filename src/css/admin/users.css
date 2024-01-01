@@ -1,0 +1,130 @@
+.users {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 0;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.users-con {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Heading */
+
+.users-heading {
+  font-size: clamp(2rem, 4vw, 2.3rem);
+  text-align: center;
+}
+
+.users-lower {
+  box-shadow: var(--BOX-SHADOW);
+  padding: 1rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Fields */
+
+.users-fields {
+  display: grid;
+  grid-template-columns: 2fr;
+  font-weight: 900;
+}
+
+.users-fields span {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* User */
+
+.user {
+  display: grid;
+  grid-template-columns: 2fr;
+  border-bottom: var(--LIGHT-BORDER);
+  padding: 1rem 0;
+}
+
+.user:last-child {
+  border-bottom: none;
+}
+
+.user span {
+  text-align: center;
+  white-space: nowrap;
+  color: var(--LIGHT-TEXT-COLOR);
+}
+
+.user-role {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-self: center;
+  position: relative;
+  user-select: none;
+}
+
+.user-role--Admin {
+  color: black !important;
+  font-weight: 500;
+}
+
+/* OPTION */
+
+.user-role-option {
+  position: absolute;
+  background: black;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  z-index: 10;
+  top: 2rem;
+  left: -5px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+  font-weight: 100;
+}
+.user-role-option:hover {
+  background: whitesmoke;
+  color: black;
+}
+.user-role-option::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.6rem;
+  border: 5px solid;
+  border-color: transparent transparent black transparent;
+}
+
+/* EDIT BUTTON ON THE USER */
+
+.user-edit-btn {
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  user-select: none;
+}
+
+@media screen and (min-width: 600px) {
+  .users-fields {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+
+  .user {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 860px) {
+  .users {
+    width: 70%;
+  }
+}

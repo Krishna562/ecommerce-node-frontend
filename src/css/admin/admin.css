@@ -1,0 +1,405 @@
+:root {
+  --DASHBOARD-CONTENT-WIDTH: 90%;
+  --LIGHT-TEXT-COLOR: #505050;
+  --HEADING-FONT-SIZE: clamp(2rem, 4vw, 2.5rem);
+  --TEXT-FONT-SIZE: clamp(1rem, 2vw, 1.3rem);
+  --BOX-SHADOW: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  --LIGHT-BORDER: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.admin {
+  width: 100%;
+  display: flex;
+  margin-top: 60px;
+}
+
+/* SIDEBAR */
+
+.admin__sidebar {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 1rem;
+  padding: 7rem 0rem 1rem 3rem;
+  width: 25%;
+  max-width: 300px;
+  min-width: 70px;
+  height: calc(100vh - 60px);
+}
+
+/* ADMIN TABS */
+
+.admin__tab {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  padding: 1rem 2rem;
+  color: var(--LIGHT-TEXT-COLOR);
+  white-space: nowrap;
+}
+
+.admin__tab-icons {
+  font-size: 1.5rem;
+}
+
+.admin__tab--active {
+  border-left: 5px solid rebeccapurple;
+  background: rgba(0, 0, 0, 0.158);
+  margin-left: -5px;
+  color: rebeccapurple;
+}
+
+.admin__tab--add-product {
+  border: 1px dashed rebeccapurple;
+  padding: 1rem !important;
+  margin: -1px;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem 1rem;
+  margin: 0 auto;
+}
+
+/* HEADING */
+
+.dashboard__heading {
+  font-size: 2.2rem;
+  width: var(--DASHBOARD-CONTENT-WIDTH);
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* STATUS CARDS */
+
+.dashboard__status-con {
+  display: grid;
+  width: var(--DASHBOARD-CONTENT-WIDTH);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+}
+
+.dashboard__status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: var(--BOX-SHADOW);
+  padding: 1rem;
+  border-radius: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dashboard__status-head {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  font-size: 1.5rem;
+  align-items: center;
+}
+
+.dashboard__status-value {
+  margin: auto;
+  font-size: 1.1rem;
+}
+
+.dashboard__status-icon {
+  border-radius: 50%;
+  height: 45px;
+  width: 45px;
+  display: grid;
+  place-content: center;
+  padding: 0.5rem;
+  color: whitesmoke;
+  font-size: 1.7rem;
+}
+
+.dashboard__status-icon--revenue {
+  background-color: #50c878;
+}
+.dashboard__status-icon--users {
+  background-color: #e0115f;
+}
+.dashboard__status-icon--products {
+  background-color: royalblue;
+}
+.dashboard__status-icon--orders {
+  background-color: rebeccapurple;
+}
+
+/* RECENT ORDERS */
+
+.orders-con {
+  width: var(--DASHBOARD-CONTENT-WIDTH);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Heading */
+
+.orders-head {
+  font-size: 1.8rem;
+  text-align: left;
+}
+
+.orders-lower {
+  box-shadow: var(--BOX-SHADOW);
+  padding: 1rem;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Fields */
+
+.orders-fields {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+  font-weight: 900;
+}
+
+.orders-fields span {
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Order */
+
+.order {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 0.5fr;
+  border-bottom: var(--LIGHT-BORDER);
+  padding: 1rem 0;
+}
+
+.order:last-child {
+  border-bottom: none;
+}
+
+.order span {
+  text-align: center;
+  white-space: nowrap;
+  color: var(--LIGHT-TEXT-COLOR);
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-self: center;
+  position: relative;
+  user-select: none;
+}
+
+.order-status--delivered {
+  color: #50c878 !important;
+}
+.order-status--pending {
+  color: red !important;
+}
+.order-status--shipped {
+  color: rgb(219, 186, 101) !important;
+}
+
+/* ORDER EDIT BTN */
+
+.order-edit-btn {
+  display: grid;
+  cursor: pointer;
+  position: relative;
+}
+
+/* DASHBOARD RECENT ORDERS HEADING */
+
+.dashboard__orders-heading {
+  font-size: 2rem;
+}
+
+/* Show all btn */
+
+.dashboard__orders-show-all {
+  margin: -1rem auto;
+  text-decoration: none;
+}
+
+/* Order Status options */
+
+.order-status-options-con {
+  position: absolute;
+  background: black;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+  top: 2rem;
+  left: -3px;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+}
+/* Arrow */
+.order-status-options-con::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.6rem;
+  border: 5px solid;
+  border-color: transparent transparent black transparent;
+}
+
+/* Orders status option */
+.order-status-option {
+  padding: 0.2rem 0.5rem;
+}
+.order-status-option:hover {
+  background: whitesmoke;
+  color: black;
+}
+
+/* MAKING DASHBOARD RESPONSIVE */
+
+@media screen and (max-width: 1250px) {
+  .admin__sidebar {
+    width: 20%;
+    padding-left: 1.5rem;
+  }
+  .admin__tab {
+    padding: 1rem;
+  }
+  .dashboard {
+    width: 80%;
+  }
+  .dashboard__status-con {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 985px) {
+  :root {
+    --DASHBOARD-CONTENT-WIDTH: 95%;
+  }
+  .dashboard__status-head {
+    font-size: 1.3rem;
+  }
+  .dashboard__status-icon {
+    height: 40px;
+    width: 40px;
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .admin__sidebar {
+    width: 10%;
+  }
+
+  .admin__tab span {
+    display: none;
+  }
+
+  .dashboard {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 790px) {
+  .dashboard__status-con {
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .admin__sidebar {
+    padding-left: 1rem;
+  }
+  .admin__tab {
+    padding: 1rem;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .orders-fields {
+    grid-template-columns: 2fr 1fr 0.5fr;
+  }
+  .orders-fields span:nth-child(2) {
+    display: none;
+  }
+  .orders-fields span:nth-child(4) {
+    display: none;
+  }
+  .order {
+    grid-template-columns: 2fr 1fr 0.5fr;
+  }
+  .order span:nth-child(2) {
+    display: none;
+  }
+  .order span:nth-child(4) {
+    display: none;
+  }
+  .dashboard__orders-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  :root {
+    --DASHBOARD-CONTENT-WIDTH: 100%;
+  }
+  .orders-fields {
+    grid-template-columns: 2fr 0.5fr;
+  }
+  .orders-fields span:nth-child(3) {
+    display: none;
+  }
+  .order {
+    grid-template-columns: 2fr 0.5fr;
+  }
+  .order span:nth-child(3) {
+    display: none;
+  }
+  .orders-lower {
+    padding: 1rem 0.5rem;
+  }
+  .dashboard__status-icon {
+    width: 35px;
+    height: 35px;
+  }
+  .dashboard__status-head {
+    gap: 0.5rem;
+  }
+  .dashboard__status span {
+    font-size: 1.1rem;
+  }
+  .dashboard__heading {
+    font-size: 2rem;
+  }
+  .dashboard {
+    gap: 2rem;
+  }
+  .admin__sidebar {
+    padding-left: 0.5rem;
+    min-width: 60px;
+  }
+}
+
+/* ALL ORDERS */
+
+.all-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 75%;
+  margin: 2rem auto;
+}
+
+.all-orders__heading {
+  font-size: 2rem;
+}
