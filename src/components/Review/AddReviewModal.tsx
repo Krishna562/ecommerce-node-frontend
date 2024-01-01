@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IoMdClose } from "react-icons/io";
 import { BiErrorCircle } from "react-icons/bi";
+import { MdOutlineStar } from "react-icons/md";
 
 type Props = {
   isModalOpen: boolean;
@@ -12,6 +13,21 @@ type Props = {
 
 const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
   const modalRef = useRef<HTMLDialogElement>(null);
+  const starsConRef = useRef<HTMLDivElement>(null);
+
+  const [starRating, setStarRating] = useState<number | null>(null);
+  const [tooltip, setTooltip] = useState<string | null>(null);
+  const [ratingErr, setRatingErr] = useState<string | null>(null);
+
+  const tooltipArr = ["Poor", "Below Average", "Average", "Good", "Excellent"];
+
+  useEffect(() => {
+    if (isModalOpen) {
+      modalRef.current?.showModal();
+    } else {
+      modalRef.current?.close();
+    }
+  }, [isModalOpen]);
 
   const schema = yup.object().shape({
     comment: yup
@@ -29,17 +45,72 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
 
   const commentValidationErr = errors.comment?.message;
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-  });
+  const addYellowBackgroundAndTooltip = (currIndex: number) => {
+    setStarRating(null);
+    const starsArr = Array.from(
+      starsConRef.current?.children as HTMLCollectionOf<HTMLElement>
+    );
+    starsArr.forEach((star, i) => {
+      if (currIndex >= i) {
+        star.style.color = "goldenrod";
+      }
 
-  useEffect(() => {
-    if (isModalOpen) {
-      modalRef.current?.showModal();
-    } else {
-      modalRef.current?.close();
-    }
-  }, [isModalOpen]);
+      // set Tooltip
+      setTooltip(tooltipArr.find((tip, index) => currIndex === index)!);
+    });
+  };
+
+  const removeYellowBackgroundAndTooltip = () => {
+    if (starRating) return;
+    const starsArr = Array.from(
+      starsConRef.current?.children as HTMLCollectionOf<HTMLElement>
+    );
+    starsArr.forEach((star, i) => {
+      star.style.color = "black";
+    });
+    // remove Tooltip
+    setTooltip(null);
+  };
+
+  const handleStarClick = (currIndex: number) => {
+    setStarRating(currIndex + 1);
+    setRatingErr(null);
+    const starsArr = Array.from(
+      starsConRef.current?.children as HTMLCollectionOf<HTMLElement>
+    );
+    starsArr.forEach((star, i) => {
+      if (currIndex >= i) {
+        star.style.color = "goldenrod";
+      } else {
+        star.style.color = "black";
+      }
+
+      // set Tooltip
+      setTooltip(tooltipArr.find((tip, index) => currIndex === index)!);
+    });
+  };
+
+  const stars = [];
+  for (let i = 0; i < 5; i++) {
+    const star = (
+      <i
+        key={i}
+        className="star"
+        onMouseEnter={() => addYellowBackgroundAndTooltip(i)}
+        onMouseLeave={() => removeYellowBackgroundAndTooltip()}
+        onClick={() => handleStarClick(i)}
+      >
+        <MdOutlineStar />
+      </i>
+    );
+    stars.push(star);
+  }
+
+  // FUNCTIONS
+
+  const onSubmit = handleSubmit((data) => {
+    if (!starRating) return;
+  });
 
   return (
     <dialog
@@ -56,7 +127,18 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
 
       <form className="add-review__con" onSubmit={(e) => e.preventDefault()}>
         <h1 className="add-review__heading">Add a review</h1>
-        <div className="add-review__stars">Stars</div>
+        <div className="add-review__stars-con" ref={starsConRef}>
+          {stars.map((star, i) => {
+            return star;
+          })}
+          {tooltip && <span className="add-review__tooltip">{tooltip}</span>}
+        </div>
+        {ratingErr && (
+          <p className="input__errMessage add-review__err-msg">
+            <BiErrorCircle />
+            {ratingErr}
+          </p>
+        )}
         <textarea
           {...register("comment")}
           name="comment"
@@ -69,7 +151,13 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
             {commentValidationErr}
           </p>
         )}
-        <button className="add-review__add-btn btn" onClick={onSubmit}>
+        <button
+          className="add-review__add-btn btn"
+          onClick={(e) => {
+            onSubmit(e);
+            setRatingErr("Please give a rating to the product");
+          }}
+        >
           Add review
         </button>
       </form>

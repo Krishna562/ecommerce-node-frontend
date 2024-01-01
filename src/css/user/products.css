@@ -305,3 +305,15 @@
   margin-top: -3px;
   gap: 0.5rem;
 }
+
+/* STARS */
+
+.star:hover {
+  cursor: pointer;
+}
+
+/* Tooltip */
+
+.add-review__tooltip {
+  margin-left: 0.5rem;
+}
