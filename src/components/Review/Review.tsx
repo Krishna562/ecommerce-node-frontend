@@ -1,7 +1,10 @@
+import { UserI } from "../../store/reducers/userReducer";
+import Stars from "../Stars";
+
 type Props = {
   review: {
-    userId: string;
-    stars: Number;
+    userId: UserI;
+    stars: number;
     comment: string;
   };
 };
@@ -11,8 +14,8 @@ const Review = ({ review }: Props) => {
 
   return (
     <div className="review">
-      <div className="review__username">{userId}</div>
-      <div className="review__stars">{stars.toString()} stars</div>
+      <div className="review__username">{userId.username}</div>
+      <Stars rating={stars} />
       <div className="review__comment">{comment}</div>
     </div>
   );

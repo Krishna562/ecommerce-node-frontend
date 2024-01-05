@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios/axios";
+import { UserI } from "./userReducer";
 
 export interface ProductI {
   _id: string;
@@ -11,7 +12,7 @@ export interface ProductI {
   images: Array<string>;
   reviews: Array<{
     stars: number;
-    userId: string;
+    userId: UserI;
     comment: string;
   }>;
   userId?: string;
@@ -66,7 +67,7 @@ export const addProduct = createAsyncThunk(
     const apiUrl =
       import.meta.env.MODE === "production"
         ? import.meta.env.VITE_ONRENER_API_URL
-        : import.meta.env.VITE_LOCAL_API_URL;
+        : import.meta.env.VITE_API_URL;
 
     try {
       const response = await fetch(`${apiUrl}/admin/add-product`, {
@@ -133,7 +134,7 @@ export const editProduct = createAsyncThunk(
     const apiUrl =
       import.meta.env.MODE === "production"
         ? import.meta.env.VITE_ONRENER_API_URL
-        : import.meta.env.VITE_LOCAL_API_URL;
+        : import.meta.env.VITE_API_URL;
 
     const response = await fetch(`${apiUrl}/admin/edit-product/${productId}`, {
       method: "PATCH",
@@ -142,6 +143,29 @@ export const editProduct = createAsyncThunk(
     });
     const result = await response.json();
     return result;
+  }
+);
+
+// ADD A PRODUCT REVIEW
+
+interface ReviewData {
+  stars: number;
+  comment: string;
+  productId: string;
+}
+
+export const addProductReview = createAsyncThunk(
+  "product/addReview",
+  async ({ stars, comment, productId }: ReviewData) => {
+    try {
+      const result = await axios.post(`/add-review/${productId}`, {
+        stars,
+        comment,
+      });
+      return result.data;
+    } catch (err) {
+      console.log(err);
+    }
   }
 );
 
@@ -179,6 +203,11 @@ const productSlice = createSlice({
 
     // EDIT A PRODUCT
     builder.addCase(editProduct.fulfilled, (state, action) => {
+      state.allProducts = action.payload.updatedProducts;
+    });
+
+    // ADD A PRODUCT REVIEW
+    builder.addCase(addProductReview.fulfilled, (state, action) => {
       state.allProducts = action.payload.updatedProducts;
     });
   },

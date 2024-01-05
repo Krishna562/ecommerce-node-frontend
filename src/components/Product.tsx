@@ -1,9 +1,11 @@
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { ProductI, deleteProduct } from "../store/reducers/product";
 import addCurrencySymbol from "../utils/formatter";
-import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { useAppDispatch } from "../hooks/hooks";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineStar, MdOutlineStarBorderPurple500 } from "react-icons/md";
+import Stars from "./Stars";
+import { addToCart } from "../store/reducers/userReducer";
+import { toast } from "react-toastify";
 
 interface ProductPropsI {
   product: ProductI;
@@ -16,18 +18,12 @@ const Product = ({ product, from }: ProductPropsI) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
-
-  const averageRating =
-    reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length;
-
-  const stars = [];
-
-  // for(let i = 0; i < averageRating.)
-
   const deleteProd = async (id: string) => {
     await dispatch(deleteProduct(id));
   };
+
+  const averageRating =
+    reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length;
 
   return (
     <div className="product">
@@ -35,7 +31,11 @@ const Product = ({ product, from }: ProductPropsI) => {
       <div className="product__img-con">
         <img src={images[0]} alt={name} className="product__img" />
         {/* RATING */}
-        <div className="product__stars">stars.map()</div>
+        {reviews.length !== 0 && (
+          <div className="product__stars">
+            <Stars rating={averageRating} />
+          </div>
+        )}
       </div>
       {/* INFORMATION */}
       <div className="product__info-con">
@@ -72,7 +72,24 @@ const Product = ({ product, from }: ProductPropsI) => {
               >
                 Details
               </button>
-              <button className="btn product__btn ">Add to cart</button>
+              <button
+                className="btn product__btn"
+                onClick={async () => {
+                  await dispatch(addToCart(_id));
+                  toast.success("Product added to cart", {
+                    position: "bottom-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "light",
+                  });
+                }}
+              >
+                Add to cart
+              </button>
             </div>
           )}
           <div className="product__category">{category}</div>

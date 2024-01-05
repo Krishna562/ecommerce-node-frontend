@@ -5,6 +5,7 @@ import Review from "../../components/Review/Review";
 import addCurrencySymbol from "../../utils/formatter";
 import { useState } from "react";
 import AddReviewModal from "../../components/Review/AddReviewModal";
+import Stars from "../../components/Stars";
 
 const SpecificProduct = () => {
   const { productId } = useParams();
@@ -13,6 +14,7 @@ const SpecificProduct = () => {
   const product = useAppSelector((state) => state.product.allProducts).find(
     (prod) => prod._id === productId
   );
+  const currentUser = useAppSelector((state) => state.user.currentUser);
 
   const [selectedImg, setSelectedImg] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +30,15 @@ const SpecificProduct = () => {
   }
 
   const { images, price, name, description, reviews, stock } = product;
+
+  const hasGivenReview = reviews.find(
+    (review) => review.userId._id === currentUser._id
+  )
+    ? true
+    : false;
+
+  const averageRating =
+    reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length;
 
   return (
     <section className="s-product">
@@ -68,13 +79,18 @@ const SpecificProduct = () => {
             {/* Name */}
             <div className="s-product__name">{name}</div>
             <div className="s-product__info-reviews">
-              {/* Stars */}
-              <span className="s-product__average-stars">stars</span>
               {/* Average */}
-              <span className="s-product__average-number">4.3</span>
+              <span className="s-product__average-number">
+                {averageRating.toString().slice(0, 3)}
+              </span>
+              {/* Stars */}
+              <div className="s-product__average-stars">
+                <Stars rating={averageRating} />
+              </div>
+
               {/* Total reviews */}
               <span className="s-product__total-reviews">
-                {reviews.length} reviews
+                {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
               </span>
             </div>
           </div>
@@ -106,12 +122,13 @@ const SpecificProduct = () => {
       <AddReviewModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        productId={productId!}
       />
       <div className="s-product__reviews">
         {/* Head */}
         <div className="s-product__reviews-head">
           <h2 className="s-product__reviews-heading">Reviews</h2>
-          {isLoggedIn && (
+          {isLoggedIn && !hasGivenReview && (
             <button
               className="btn s-product__add-review-btn"
               onClick={() => setIsModalOpen(true)}
@@ -124,7 +141,7 @@ const SpecificProduct = () => {
         {reviews.length !== 0 ? (
           <div className="s-product__reviews-con">
             {reviews.map((review) => (
-              <Review review={review} key={review.userId} />
+              <Review review={review} key={review.userId._id} />
             ))}
           </div>
         ) : (

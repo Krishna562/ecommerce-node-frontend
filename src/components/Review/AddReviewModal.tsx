@@ -5,15 +5,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IoMdClose } from "react-icons/io";
 import { BiErrorCircle } from "react-icons/bi";
 import { MdOutlineStar } from "react-icons/md";
+import { useAppDispatch } from "../../hooks/hooks";
+import { addProductReview } from "../../store/reducers/product";
 
 type Props = {
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  productId: string;
 };
 
-const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
+const AddReviewModal = ({ isModalOpen, setIsModalOpen, productId }: Props) => {
   const modalRef = useRef<HTMLDialogElement>(null);
   const starsConRef = useRef<HTMLDivElement>(null);
+
+  const dispatch = useAppDispatch();
 
   const [starRating, setStarRating] = useState<number | null>(null);
   const [tooltip, setTooltip] = useState<string | null>(null);
@@ -46,7 +51,6 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
   const commentValidationErr = errors.comment?.message;
 
   const addYellowBackgroundAndTooltip = (currIndex: number) => {
-    setStarRating(null);
     const starsArr = Array.from(
       starsConRef.current?.children as HTMLCollectionOf<HTMLElement>
     );
@@ -61,15 +65,29 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
   };
 
   const removeYellowBackgroundAndTooltip = () => {
-    if (starRating) return;
-    const starsArr = Array.from(
-      starsConRef.current?.children as HTMLCollectionOf<HTMLElement>
-    );
-    starsArr.forEach((star, i) => {
-      star.style.color = "black";
-    });
-    // remove Tooltip
-    setTooltip(null);
+    if (starRating) {
+      const starsArr = Array.from(
+        starsConRef.current?.children as HTMLCollectionOf<HTMLElement>
+      );
+      starsArr.forEach((star, i) => {
+        if (starRating - 1 >= i) {
+          star.style.color = "goldenrod";
+        } else {
+          star.style.color = "black";
+        }
+      });
+
+      setTooltip(tooltipArr.find((tip, index) => starRating - 1 === index)!);
+    } else {
+      const starsArr = Array.from(
+        starsConRef.current?.children as HTMLCollectionOf<HTMLElement>
+      );
+      starsArr.forEach((star, i) => {
+        star.style.color = "black";
+      });
+      // remove Tooltip
+      setTooltip(null);
+    }
   };
 
   const handleStarClick = (currIndex: number) => {
@@ -106,10 +124,18 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
     stars.push(star);
   }
 
-  // FUNCTIONS
-
   const onSubmit = handleSubmit((data) => {
     if (!starRating) return;
+
+    dispatch(
+      addProductReview({
+        stars: starRating,
+        comment: data.comment,
+        productId: productId,
+      })
+    );
+
+    setIsModalOpen(false);
   });
 
   return (
@@ -128,9 +154,7 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
       <form className="add-review__con" onSubmit={(e) => e.preventDefault()}>
         <h1 className="add-review__heading">Add a review</h1>
         <div className="add-review__stars-con" ref={starsConRef}>
-          {stars.map((star, i) => {
-            return star;
-          })}
+          {stars.map((star) => star)}
           {tooltip && <span className="add-review__tooltip">{tooltip}</span>}
         </div>
         {ratingErr && (
@@ -155,7 +179,8 @@ const AddReviewModal = ({ isModalOpen, setIsModalOpen }: Props) => {
           className="add-review__add-btn btn"
           onClick={(e) => {
             onSubmit(e);
-            setRatingErr("Please give a rating to the product");
+            if (!starRating)
+              setRatingErr("Please give a rating to the product");
           }}
         >
           Add review

@@ -20,10 +20,10 @@ const Signup = () => {
   const methods = useForm({ resolver: yupResolver(yupSignupSchema) });
 
   const onSumbit = methods.handleSubmit(async (data) => {
-    const { email, password, confirmPassword } = data;
+    const { email, password, confirmPassword, username } = data;
     try {
-      const result = await dispatch(
-        signup({ email, password, confirmPassword })
+      await dispatch(
+        signup({ email, password, confirmPassword, username })
       ).unwrap();
       navigate("/login");
     } catch (err) {
@@ -40,6 +40,7 @@ const Signup = () => {
           e.preventDefault();
         }}
       >
+        <Input placeholder="Username" type="text" field="username" />
         <Input placeholder="Email" type="text" field="email" />
         <Input placeholder="Password" type="password" field="password" />
         <Input

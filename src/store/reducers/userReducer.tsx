@@ -1,12 +1,18 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "../../axios/axios";
+import { ProductI } from "./product";
 
 export interface UserI {
   email: string;
   isAdmin: boolean;
-  cart: Array<object>;
+  cart: Array<{
+    productId: ProductI;
+    qty: number;
+    _id: string;
+  }>;
   dateJoined: string;
   _id: string;
+  username: string;
 }
 
 interface INIT_STATE_TYPE {
@@ -26,6 +32,7 @@ const INITIAL_STATE: INIT_STATE_TYPE = {
     cart: [],
     dateJoined: "",
     _id: "",
+    username: "",
   },
   err: {},
   allUsers: [],
@@ -46,6 +53,7 @@ export const fetchUserAndCheckAuth = createAsyncThunk(
 interface LoginPropsI {
   email: string;
   password: string;
+  username: string;
 }
 
 export const login = createAsyncThunk(
@@ -76,12 +84,16 @@ interface SignupPropsI extends LoginPropsI {
 
 export const signup = createAsyncThunk(
   "user/signup",
-  async ({ email, password, confirmPassword }: SignupPropsI, thunkApi) => {
+  async (
+    { username, email, password, confirmPassword }: SignupPropsI,
+    thunkApi
+  ) => {
     try {
       await axios.post("/signup", {
         email,
         password,
         confirmPassword,
+        username,
       });
     } catch (err) {
       return thunkApi.rejectWithValue(err);
@@ -162,6 +174,60 @@ export const changeUserRole = createAsyncThunk(
   }
 );
 
+interface CartProdI {
+  prod: ProductI;
+  qty: number;
+}
+
+// ADD TO CART
+
+export const addToCart = (prod: ProductI) => {
+  if (!localStorage.getItem("cart")) {
+    localStorage.setItem("cart", JSON.stringify([]));
+  }
+  const cart = JSON.parse(localStorage.getItem("cart")!);
+  const cartProduct = cart.find(
+    (item: CartProdI) => item.prod._id === prod._id
+  );
+  // const newProduct = {
+  //   productId: prod._id,
+  //   qty: cartProduct ? cartProduct.  + 1 : 1,
+  // };
+  // const updatedCartItems = cartProduct
+  //   ? user.cart.map((item) =>
+  //       item.productId === cartProduct.productId ? newProduct : item
+  //     )
+  //   : [...user.cart, newProduct];
+  // user.cart = updatedCartItems;
+  // await user.save();
+};
+
+// export const addToCart = createAsyncThunk(
+//   "user/addToCart",
+//   async (id: string) => {
+//     try {
+//       const result = await axios.post(`/add-to-cart/${id}`);
+//       return result.data;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// );
+
+// REMOVE FROM CART
+
+// export const removeFromCart = createAsyncThunk(
+//   "user/removeFromCart",
+//   async (id) => {
+//     try {
+//       const result = await axios.delete(`/remove-from-cart/${id}`);
+//       return result.data;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// );
+
 const userSlice = createSlice({
   name: "user",
   initialState: INITIAL_STATE,
@@ -226,6 +292,16 @@ const userSlice = createSlice({
     builder.addCase(changeUserRole.fulfilled, (state, action) => {
       state.allUsers = action.payload.updatedUsers;
     });
+
+    // ADD TO CART
+    // builder.addCase(addToCart.fulfilled, (state, action) => {
+    //   state.currentUser.cart = action.payload.updatedCartProducts;
+    // });
+
+    // REMOVE FROM CART
+    // builder.addCase(removeFromCart.fulfilled, (state, action) => {
+    //   state.currentUser.cart = action.payload.updatedCartProducts;
+    // });
   },
 });
 

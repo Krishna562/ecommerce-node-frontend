@@ -24,6 +24,8 @@ import AdminProtectedRoute from "./protected routes/AdminProtectedRoute";
 import { getAllProducts } from "./store/reducers/product";
 import Footer from "./components/Footer";
 import SpecificProduct from "./views/accessable/SpecificProduct";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -32,11 +34,14 @@ function App() {
   const currentUser = useAppSelector((state) => state.user.currentUser);
 
   const setUserAndCheckAuth = async (): Promise<void> => {
-    try {
-      await dispatch(fetchUserAndCheckAuth()).unwrap();
-    } catch (err) {
-      console.log(err);
-    }
+    await dispatch(fetchUserAndCheckAuth());
+  };
+
+  // SET THE CART
+  const setCart = () => {
+    const alreadyExists = localStorage.getItem("cart") ? true : false;
+    if (alreadyExists) return;
+    localStorage.setItem("cart", JSON.stringify([]));
   };
 
   // GET ALL THE PRODUCTS
@@ -47,12 +52,13 @@ function App() {
   useEffect(() => {
     setUserAndCheckAuth();
     getProducts();
+    setCart();
   }, []);
 
   return (
     <>
       <Header />
-
+      <ToastContainer />
       <Routes>
         {/* ACCESSABLE ROUTES */}
 
